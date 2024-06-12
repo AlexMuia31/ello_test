@@ -20,6 +20,7 @@ import { BannerButton } from "../buttons/buttons";
 
 interface StyledTabProps {
   label: string;
+  //test
 }
 
 export const AntTabs = styled(Tabs)({
@@ -95,7 +96,7 @@ const CustomTabs = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    setRowsToShow(2); // Reset rows to show when tab changes
+    setRowsToShow(2);
   };
 
   const loadMore = () => {
@@ -107,7 +108,7 @@ const CustomTabs = () => {
     newValue: any | null
   ) => {
     setSelectedBook(newValue);
-    setRowsToShow(2); // Reset rows to show when filter changes
+    setRowsToShow(2);
   };
 
   const filteredBooks = selectedBook
