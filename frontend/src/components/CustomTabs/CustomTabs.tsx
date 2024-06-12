@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
+import { BannerButton } from "../buttons/buttons";
 
 interface StyledTabProps {
   label: string;
@@ -147,9 +148,16 @@ const CustomTabs = () => {
             </Grid>
             {filteredByLevel.length > booksToShow.length && (
               <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <Button variant="contained" onClick={loadMore}>
-                  Load More
-                </Button>
+                <BannerButton
+                  onClick={loadMore}
+                  sx={{
+                    color: "secondary.light",
+                    textTransform: "capitalize",
+                    width: "200px",
+                  }}
+                >
+                  Load More ...
+                </BannerButton>
               </Box>
             )}
           </>
@@ -159,24 +167,8 @@ const CustomTabs = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", mt: { xs: "7%", sm: "5%" } }}>
+    <Box sx={{ width: "100%", mt: { xs: "7%", sm: "5%" }, pb: "4%" }}>
       <Box sx={{ bgcolor: "#fff", p: 2 }}>
-        <Autocomplete
-          options={books}
-          getOptionLabel={(option: any) => option.title}
-          value={selectedBook}
-          onChange={handleBookSelect}
-          renderInput={(params) => (
-            <TextField {...params} label="Filter by Title" />
-          )}
-          renderOption={(props, option) => (
-            <li {...props}>
-              <Avatar src={option.coverPhotoURL} sx={{ mr: 2 }} />
-              {option.title}
-            </li>
-          )}
-          sx={{ mb: 2 }}
-        />
         <AntTabs
           value={value}
           onChange={handleChange}
@@ -195,6 +187,22 @@ const CustomTabs = () => {
         </AntTabs>
       </Box>
       <Box>
+        <Autocomplete
+          options={books}
+          getOptionLabel={(option: any) => option.title}
+          value={selectedBook}
+          onChange={handleBookSelect}
+          renderInput={(params) => (
+            <TextField {...params} label="Filter by Title" />
+          )}
+          renderOption={(props, option) => (
+            <li {...props}>
+              <Avatar src={option.coverPhotoURL} sx={{ mr: 2 }} />
+              {option.title}
+            </li>
+          )}
+          sx={{ mb: 2 }}
+        />
         <CustomTabPanel value={value} index={0}>
           {filteredBooks.length === 0 ? (
             <Typography variant="h6" align="center" sx={{ mt: 2 }}>
