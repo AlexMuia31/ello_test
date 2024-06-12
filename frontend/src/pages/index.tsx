@@ -3,14 +3,14 @@ import Head from "next/head";
 import { Mulish } from "next/font/google";
 import { AppBar, Box, Container, Toolbar } from "@mui/material";
 import Image from "next/image";
-import { Heading, SubHeading } from "./components/typographies/typographies";
-import { BannerButton } from "./components/buttons/buttons";
+import { Heading, SubHeading } from "../components/typographies/typographies";
+import { BannerButton } from "../components/buttons/buttons";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import MailIcon from "@mui/icons-material/Mail";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import CustomTabs from "./components/CustomTabs/CustomTabs";
+import CustomTabs from "../components/CustomTabs/CustomTabs";
 
 const inter = Mulish({ subsets: ["latin"] });
 
