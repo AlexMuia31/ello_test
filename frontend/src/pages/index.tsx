@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
 import { Mulish } from "next/font/google";
-import { AppBar, Box, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, Toolbar } from "@mui/material";
 import Image from "next/image";
 import { Heading, SubHeading } from "./components/typographies/typographies";
 import { BannerButton } from "./components/buttons/buttons";
@@ -10,6 +10,7 @@ import XIcon from "@mui/icons-material/X";
 import MailIcon from "@mui/icons-material/Mail";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
+import CustomTabs from "./components/CustomTabs/CustomTabs";
 
 const inter = Mulish({ subsets: ["latin"] });
 
@@ -96,6 +97,9 @@ const Home = () => {
             <PinterestIcon sx={{ fontSize: "40px" }} />
           </Box>
         </Box>
+        <Container maxWidth="xl">
+          <CustomTabs />
+        </Container>
       </Box>
     </>
   );
