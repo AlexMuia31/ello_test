@@ -12,13 +12,12 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import { BannerButton } from "../buttons/buttons";
-import { Heading } from "../typographies/typographies";
+import { Heading, SubHeading } from "../typographies/typographies";
 import BookList from "../BookList/BookList";
 
 interface StyledTabProps {
@@ -162,9 +161,9 @@ const CustomTabs = () => {
         <Box sx={{ mb: "4%" }}>
           <Heading sx={{ mb: "1%" }}>Teacher's Reading List</Heading>
           {teacherList.length === 0 ? (
-            <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+            <SubHeading variant="h6" align="center" sx={{ mt: 2 }}>
               No books in List
-            </Typography>
+            </SubHeading>
           ) : (
             <Grid container spacing={2}>
               {teacherList.map((book: any) => (
@@ -172,8 +171,8 @@ const CustomTabs = () => {
                   <Card>
                     <CardMedia component="img" image={book.coverPhotoURL} />
                     <CardContent>
-                      <Typography variant="h6">{book.title}</Typography>
-                      <Typography variant="subtitle1">{book.author}</Typography>
+                      <SubHeading variant="h6">{book.title}</SubHeading>
+                      <SubHeading variant="subtitle1">{book.author}</SubHeading>
                       <Box sx={{ display: "flex", gap: 2, mt: "1%" }}>
                         <BannerButton
                           onClick={() => removeFromTeacherList(book)}
@@ -215,9 +214,9 @@ const CustomTabs = () => {
 
         <CustomTabPanel value={value} index={0}>
           {filteredBooks.length === 0 ? (
-            <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+            <SubHeading variant="h6" align="center" sx={{ mt: 2 }}>
               No books found
-            </Typography>
+            </SubHeading>
           ) : (
             <>
               <Grid container spacing={2}>
@@ -226,10 +225,10 @@ const CustomTabs = () => {
                     <Card>
                       <CardMedia component="img" image={book.coverPhotoURL} />
                       <CardContent>
-                        <Typography variant="h6">{book.title}</Typography>
-                        <Typography variant="subtitle1">
+                        <SubHeading variant="h6">{book.title}</SubHeading>
+                        <SubHeading variant="subtitle1">
                           {book.author}
-                        </Typography>
+                        </SubHeading>
                         <Box sx={{ display: "flex", gap: 2, mt: "1%" }}>
                           <BannerButton
                             onClick={() => addToTeacherList(book)}

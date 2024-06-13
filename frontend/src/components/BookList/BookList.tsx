@@ -3,10 +3,10 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { BannerButton } from "../buttons/buttons";
+import { SubHeading } from "../typographies/typographies";
 
 const BookList = ({
   books,
@@ -23,9 +23,9 @@ const BookList = ({
   return (
     <>
       {filteredBooks.length === 0 ? (
-        <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+        <SubHeading variant="h6" align="center" sx={{ mt: 2 }}>
           No books found
-        </Typography>
+        </SubHeading>
       ) : (
         <>
           <Grid container spacing={2}>
@@ -34,8 +34,8 @@ const BookList = ({
                 <Card>
                   <CardMedia component="img" image={book.coverPhotoURL} />
                   <CardContent>
-                    <Typography variant="h6">{book.title}</Typography>
-                    <Typography variant="subtitle1">{book.author}</Typography>
+                    <SubHeading variant="h6">{book.title}</SubHeading>
+                    <SubHeading variant="subtitle1">{book.author}</SubHeading>
                     <Box sx={{ display: "flex", gap: 2, mt: "1%" }}>
                       <BannerButton
                         onClick={() => addToTeacherList(book)}
