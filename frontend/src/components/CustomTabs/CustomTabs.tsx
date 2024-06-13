@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/no-unescaped-entities */
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,10 +18,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import { BannerButton } from "../buttons/buttons";
+import { Heading } from "../typographies/typographies";
 
 interface StyledTabProps {
   label: string;
-  //test
 }
 
 export const AntTabs = styled(Tabs)({
@@ -81,13 +82,25 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const CustomTabs = () => {
-  const [value, setValue] = React.useState(0);
-  const [rowsToShow, setRowsToShow] = React.useState(2);
-  const [selectedBook, setSelectedBook] = React.useState<any | null>(null);
+  const [value, setValue] = useState(0);
+  const [rowsToShow, setRowsToShow] = useState(2);
+  const [selectedBook, setSelectedBook] = useState<any | null>(null);
+  const [teacherList, setTeacherList] = useState<any[]>([]);
   const theme = useTheme();
   const isUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
   const { loading, error, data } = useQuery(GET_BOOKS);
+
+  useEffect(() => {
+    const storedTeacherList = localStorage.getItem("teacherList");
+    if (storedTeacherList) {
+      setTeacherList(JSON.parse(storedTeacherList));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("teacherList", JSON.stringify(teacherList));
+  }, [teacherList]);
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
@@ -111,61 +124,18 @@ const CustomTabs = () => {
     setRowsToShow(2);
   };
 
+  const addToTeacherList = (book: any) => {
+    const updatedTeacherList = [...teacherList, book];
+    setTeacherList(updatedTeacherList);
+  };
+
+  const removeFromTeacherList = (book: any) => {
+    setTeacherList(teacherList.filter((b) => b.title !== book.title));
+  };
+
   const filteredBooks = selectedBook
     ? books.filter((book: any) => book.title === selectedBook.title)
     : books;
-
-  const renderBooks = (readingLevel: string) => {
-    const filteredByLevel = filteredBooks.filter(
-      (book: any) => book.readingLevel === readingLevel
-    );
-
-    const booksToShow = filteredByLevel.slice(0, rowsToShow * 4);
-
-    return (
-      <>
-        {filteredByLevel.length === 0 ? (
-          <Typography variant="h6" align="center" sx={{ mt: 2 }}>
-            No books found
-          </Typography>
-        ) : (
-          <>
-            <Grid container spacing={3}>
-              {booksToShow.map((book: any) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={book.title}>
-                  <Box>
-                    <Card>
-                      <CardMedia component="img" image={book.coverPhotoURL} />
-                      <CardContent>
-                        <Typography variant="h6">{book.title}</Typography>
-                        <Typography variant="subtitle1">
-                          {book.author}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-            {filteredByLevel.length > booksToShow.length && (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <BannerButton
-                  onClick={loadMore}
-                  sx={{
-                    color: "secondary.light",
-                    textTransform: "capitalize",
-                    width: "200px",
-                  }}
-                >
-                  Load More ...
-                </BannerButton>
-              </Box>
-            )}
-          </>
-        )}
-      </>
-    );
-  };
 
   return (
     <Box sx={{ width: "100%", mt: { xs: "7%", sm: "5%" }, pb: "4%" }}>
@@ -188,6 +158,43 @@ const CustomTabs = () => {
         </AntTabs>
       </Box>
       <Box>
+        <Box sx={{ mb: "4%" }}>
+          <Heading sx={{ mb: "1%" }}>Teacher's Reading List</Heading>
+          {teacherList.length === 0 ? (
+            <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+              No books in List
+            </Typography>
+          ) : (
+            <Grid container spacing={2}>
+              {teacherList.map((book: any) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={book.title}>
+                  <Card>
+                    <CardMedia component="img" image={book.coverPhotoURL} />
+                    <CardContent>
+                      <Typography variant="h6">{book.title}</Typography>
+                      <Typography variant="subtitle1">{book.author}</Typography>
+                      <Box sx={{ display: "flex", gap: 2, mt: "1%" }}>
+                        <BannerButton
+                          onClick={() => removeFromTeacherList(book)}
+                          sx={{
+                            textTransform: "capitalize",
+                            bgcolor: "info.main",
+                            color: "secondary.light",
+                            "&:hover": {
+                              bgcolor: "info.main",
+                            },
+                          }}
+                        >
+                          Remove
+                        </BannerButton>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
         <Autocomplete
           options={books}
           getOptionLabel={(option: any) => option.title}
@@ -204,6 +211,7 @@ const CustomTabs = () => {
           )}
           sx={{ mb: 2 }}
         />
+
         <CustomTabPanel value={value} index={0}>
           {filteredBooks.length === 0 ? (
             <Typography variant="h6" align="center" sx={{ mt: 2 }}>
@@ -213,7 +221,7 @@ const CustomTabs = () => {
             <>
               <Grid container spacing={2}>
                 {filteredBooks.slice(0, rowsToShow * 4).map((book: any) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={book.title}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={book.id}>
                     <Card>
                       <CardMedia component="img" image={book.coverPhotoURL} />
                       <CardContent>
@@ -221,6 +229,21 @@ const CustomTabs = () => {
                         <Typography variant="subtitle1">
                           {book.author}
                         </Typography>
+                        <Box sx={{ display: "flex", gap: 2, mt: "1%" }}>
+                          <BannerButton
+                            onClick={() => addToTeacherList(book)}
+                            sx={{
+                              textTransform: "capitalize",
+                              bgcolor: "primary.main",
+                              color: "secondary.light",
+                              "&:hover": {
+                                bgcolor: "primary.main",
+                              },
+                            }}
+                          >
+                            Add to List
+                          </BannerButton>
+                        </Box>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -228,40 +251,20 @@ const CustomTabs = () => {
               </Grid>
               {filteredBooks.length > rowsToShow * 4 && (
                 <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                  <Button variant="contained" onClick={loadMore}>
-                    Load More
-                  </Button>
+                  <BannerButton
+                    variant="contained"
+                    onClick={loadMore}
+                    sx={{
+                      textTransform: "capitalize",
+                      color: "secondary.light",
+                    }}
+                  >
+                    Load More ...
+                  </BannerButton>
                 </Box>
               )}
             </>
           )}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          {renderBooks("A")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          {renderBooks("B")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          {renderBooks("C")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={4}>
-          {renderBooks("E")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={5}>
-          {renderBooks("F")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={6}>
-          {renderBooks("G")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={7}>
-          {renderBooks("H")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={8}>
-          {renderBooks("I")}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={9}>
-          {renderBooks("J")}
         </CustomTabPanel>
       </Box>
     </Box>
