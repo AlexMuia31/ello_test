@@ -43,19 +43,12 @@ const BookList = ({
                           textTransform: "capitalize",
                           bgcolor: "primary.main",
                           color: "secondary.light",
+                          "&:hover": {
+                            bgcolor: "primary.main",
+                          },
                         }}
                       >
                         Add to List
-                      </BannerButton>
-                      <BannerButton
-                        onClick={() => removeFromTeacherList(book)}
-                        sx={{
-                          textTransform: "capitalize",
-                          bgcolor: "info.main",
-                          color: "secondary.light",
-                        }}
-                      >
-                        Remove
                       </BannerButton>
                     </Box>
                   </CardContent>
@@ -65,9 +58,16 @@ const BookList = ({
           </Grid>
           {filteredBooks.length > rowsToShow * 4 && (
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-              <Button variant="contained" onClick={loadMore}>
+              <BannerButton
+                variant="contained"
+                onClick={loadMore}
+                sx={{
+                  textTransform: "capitalize",
+                  color: "secondary.light",
+                }}
+              >
                 Load More
-              </Button>
+              </BannerButton>
             </Box>
           )}
         </>

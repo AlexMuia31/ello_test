@@ -19,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import { BannerButton } from "../buttons/buttons";
 import { Heading } from "../typographies/typographies";
+import BookList from "../BookList/BookList";
 
 interface StyledTabProps {
   label: string;
@@ -265,6 +266,96 @@ const CustomTabs = () => {
               )}
             </>
           )}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="A"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="B"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="C"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={4}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="E"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={5}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="F"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={6}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="G"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={7}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="H"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={8}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="I"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={9}>
+          <BookList
+            books={filteredBooks}
+            readingLevel="J"
+            rowsToShow={rowsToShow}
+            loadMore={loadMore}
+            addToTeacherList={addToTeacherList}
+            removeFromTeacherList={removeFromTeacherList}
+          />
         </CustomTabPanel>
       </Box>
     </Box>
